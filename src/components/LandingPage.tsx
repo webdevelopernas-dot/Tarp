@@ -34,7 +34,23 @@ const FEATURED_PRODUCTS = [
   { name: "Canvas Truck Cover", price: "$120.00", rating: 5, image: "https://picsum.photos/seed/tarp4/400/400" },
 ];
 
-export default function LandingPage({ onGoToDashboard }: { onGoToDashboard: () => void }) {
+export default function LandingPage({ onGoToDashboard, cmsData }: { onGoToDashboard: () => void, cmsData: any }) {
+  // Fallback data if cmsData is not yet loaded
+  const hero = cmsData?.hero || {
+    badge: "Industrial Grade Quality",
+    title: "Premium Tarps Built to Last.",
+    description: "The nation's leading supplier of heavy-duty, industrial, and custom-sized tarps. Weather-proof protection for what matters most.",
+    primaryCta: "Shop All Products",
+    secondaryCta: "Custom Quote"
+  };
+
+  const stats = cmsData?.stats || [
+    { label: "Quality Guaranteed", desc: "Industrial standards" },
+    { label: "Fast Shipping", desc: "Across the nation" },
+    { label: "Top Rated", desc: "5,000+ Happy clients" },
+    { label: "USA Based", desc: "Support local business" },
+  ];
+
   return (
     <div className="min-h-screen bg-white text-slate-900">
       {/* Top Bar */}
@@ -116,20 +132,20 @@ export default function LandingPage({ onGoToDashboard }: { onGoToDashboard: () =
             transition={{ duration: 0.6 }}
             className="max-w-2xl"
           >
-            <Badge className="mb-6 bg-blue-600 px-4 py-1 text-sm">Industrial Grade Quality</Badge>
+            <Badge className="mb-6 bg-blue-600 px-4 py-1 text-sm">{hero.badge}</Badge>
             <h1 className="mb-6 text-5xl font-black leading-tight text-white lg:text-7xl">
-              Premium Tarps <br />
+              {hero.title.split('Built to Last.')[0]} <br />
               <span className="text-blue-500 text-shadow-sm">Built to Last.</span>
             </h1>
             <p className="mb-8 text-xl text-slate-300">
-              The nation's leading supplier of heavy-duty, industrial, and custom-sized tarps. Weather-proof protection for what matters most.
+              {hero.description}
             </p>
             <div className="flex flex-wrap gap-4">
               <Button size="lg" className="h-14 rounded-full bg-blue-600 px-8 text-lg font-bold hover:bg-blue-700">
-                Shop All Products
+                {hero.primaryCta}
               </Button>
               <Button size="lg" variant="outline" className="h-14 rounded-full border-white px-8 text-lg font-bold text-white hover:bg-white hover:text-slate-900">
-                Custom Quote
+                {hero.secondaryCta}
               </Button>
             </div>
           </motion.div>
@@ -139,19 +155,17 @@ export default function LandingPage({ onGoToDashboard }: { onGoToDashboard: () =
       {/* Trust Badges */}
       <div className="border-b border-slate-100 bg-slate-50 py-10">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 md:grid-cols-4">
-          {[
-            { icon: CheckCircle2, title: "Quality Guaranteed", desc: "Industrial standards" },
-            { icon: ShoppingCart, title: "Fast Shipping", desc: "Across the nation" },
-            { icon: Star, title: "Top Rated", desc: "5,000+ Happy clients" },
-            { icon: MapPin, title: "USA Based", desc: "Support local business" },
-          ].map((item, i) => (
+          {stats.map((item: any, i: number) => (
             <div key={i} className="flex items-center gap-4">
               <div className="rounded-full bg-blue-100 p-2 text-blue-600">
-                <item.icon className="h-6 w-6" />
+                {i === 0 && <CheckCircle2 className="h-6 w-6" />}
+                {i === 1 && <ShoppingCart className="h-6 w-6" />}
+                {i === 2 && <Star className="h-6 w-6" />}
+                {i === 3 && <MapPin className="h-6 w-6" />}
               </div>
               <div>
-                <p className="text-sm font-bold">{item.title}</p>
-                <p className="text-xs text-slate-500">{item.desc}</p>
+                <p className="text-sm font-bold">{item.label}</p>
+                <p className="text-xs text-slate-500">{item.value || item.desc}</p>
               </div>
             </div>
           ))}
