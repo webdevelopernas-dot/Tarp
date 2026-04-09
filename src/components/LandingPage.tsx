@@ -1,217 +1,240 @@
 import { 
   Printer, 
-  Zap, 
-  ShieldCheck, 
-  Maximize, 
-  ArrowRight, 
+  Search, 
+  Menu, 
+  ShoppingCart, 
+  Phone, 
+  Mail, 
+  MapPin, 
+  Facebook, 
+  Twitter, 
+  Instagram, 
+  ChevronRight,
+  Star,
   CheckCircle2,
-  PlayCircle,
-  Cpu,
-  Layers,
-  Droplets
+  ArrowRight
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent } from '@/components/ui/card';
 
-const FEATURES = [
-  {
-    title: "Ultra-Fast UV Printing",
-    description: "Print up to 120sqm/hr with our proprietary high-frequency print heads.",
-    icon: Zap,
-  },
-  {
-    title: "Large Format Capability",
-    description: "Supports rolls up to 5 meters wide, perfect for industrial-grade tarps.",
-    icon: Maximize,
-  },
-  {
-    title: "Weather-Resistant Ink",
-    description: "UV-cured inks that last up to 5 years in extreme outdoor conditions.",
-    icon: Droplets,
-  },
-  {
-    title: "Precision Engineering",
-    description: "0.01mm accuracy for sharp text and vibrant, photographic quality graphics.",
-    icon: Cpu,
-  }
+const CATEGORIES = [
+  { name: "Heavy Duty Tarps", count: "120+ Products", image: "https://picsum.photos/seed/heavy/400/300" },
+  { name: "Mesh Tarps", count: "85+ Products", image: "https://picsum.photos/seed/mesh/400/300" },
+  { name: "Vinyl Tarps", count: "64+ Products", image: "https://picsum.photos/seed/vinyl/400/300" },
+  { name: "Clear Tarps", count: "42+ Products", image: "https://picsum.photos/seed/clear/400/300" },
 ];
 
-const SPECS = [
-  { label: "Print Width", value: "Up to 5.2m" },
-  { label: "Resolution", value: "1440 x 1440 DPI" },
-  { label: "Ink Type", value: "Industrial UV-LED" },
-  { label: "Media Weight", value: "Up to 150kg rolls" },
+const FEATURED_PRODUCTS = [
+  { name: "Super Heavy Duty Blue Tarp", price: "$45.99", rating: 5, image: "https://picsum.photos/seed/tarp1/400/400" },
+  { name: "Industrial Grade Mesh Tarp", price: "$32.50", rating: 4, image: "https://picsum.photos/seed/tarp2/400/400" },
+  { name: "Clear Vinyl Patio Tarp", price: "$58.00", rating: 5, image: "https://picsum.photos/seed/tarp3/400/400" },
+  { name: "Canvas Truck Cover", price: "$120.00", rating: 5, image: "https://picsum.photos/seed/tarp4/400/400" },
 ];
 
 export default function LandingPage({ onGoToDashboard }: { onGoToDashboard: () => void }) {
   return (
-    <div className="min-h-screen bg-white text-slate-900 selection:bg-blue-100">
-      {/* Navigation */}
-      <nav className="fixed top-0 z-50 w-full border-b border-slate-100 bg-white/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div className="flex items-center gap-2">
-            <Printer className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold tracking-tighter">TARP-TECH</span>
-          </div>
-          <div className="hidden items-center gap-8 md:flex">
-            <a href="#features" className="text-sm font-medium text-slate-600 hover:text-blue-600">Features</a>
-            <a href="#specs" className="text-sm font-medium text-slate-600 hover:text-blue-600">Specifications</a>
-            <a href="#pricing" className="text-sm font-medium text-slate-600 hover:text-blue-600">Pricing</a>
+    <div className="min-h-screen bg-white text-slate-900">
+      {/* Top Bar */}
+      <div className="bg-slate-900 py-2 text-white">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 text-xs font-medium">
+          <div className="flex items-center gap-4">
+            <span className="flex items-center gap-1"><Phone className="h-3 w-3" /> 1-800-TARP-LESS</span>
+            <span className="hidden items-center gap-1 sm:flex"><Mail className="h-3 w-3" /> sales@tarpforless.com</span>
           </div>
           <div className="flex items-center gap-4">
-            <button 
-              onClick={onGoToDashboard}
-              className="text-sm font-medium text-slate-600 hover:text-blue-600"
-            >
-              Admin Login
-            </button>
-            <button className="rounded-full bg-blue-600 px-6 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 active:scale-95">
-              Order Now
-            </button>
+            <button onClick={onGoToDashboard} className="hover:text-blue-400">Admin Login</button>
+            <span>Track Order</span>
           </div>
         </div>
-      </nav>
+      </div>
+
+      {/* Main Header */}
+      <header className="sticky top-0 z-50 border-b border-slate-100 bg-white/95 backdrop-blur-sm">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-2">
+            <div className="rounded-lg bg-blue-600 p-1.5 text-white">
+              <Printer className="h-6 w-6" />
+            </div>
+            <span className="text-2xl font-black tracking-tighter text-slate-900">TARP FOR LESS</span>
+          </div>
+
+          <div className="hidden flex-1 px-12 lg:block">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+              <Input 
+                placeholder="Search for tarps, sizes, materials..." 
+                className="w-full rounded-full border-slate-200 bg-slate-50 pl-10 focus-visible:ring-blue-600"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-6">
+            <div className="hidden flex-col items-end sm:flex">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Your Cart</span>
+              <span className="text-sm font-bold">$0.00</span>
+            </div>
+            <Button size="icon" variant="ghost" className="relative">
+              <ShoppingCart className="h-6 w-6" />
+              <Badge className="absolute -right-1 -top-1 h-5 w-5 justify-center rounded-full bg-blue-600 p-0">0</Badge>
+            </Button>
+            <Button size="icon" variant="ghost" className="lg:hidden">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Categories Nav */}
+        <nav className="hidden border-t border-slate-50 bg-white lg:block">
+          <div className="mx-auto flex max-w-7xl gap-8 px-6 py-3 text-sm font-semibold text-slate-600">
+            <a href="#" className="text-blue-600">Home</a>
+            <a href="#" className="hover:text-blue-600">All Products</a>
+            <a href="#" className="hover:text-blue-600">Heavy Duty</a>
+            <a href="#" className="hover:text-blue-600">Mesh</a>
+            <a href="#" className="hover:text-blue-600">Vinyl</a>
+            <a href="#" className="hover:text-blue-600">Custom Size</a>
+            <a href="#" className="hover:text-blue-600">About Us</a>
+          </div>
+        </nav>
+      </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-32 pb-20 lg:pt-48 lg:pb-32">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="grid items-center gap-12 lg:grid-cols-2">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-blue-50 px-3 py-1 text-sm font-semibold text-blue-600">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-600"></span>
-                </span>
-                New Release: Titan X-500
-              </div>
-              <h1 className="mb-6 text-5xl font-extrabold leading-[1.1] tracking-tight lg:text-7xl">
-                The Future of <span className="text-blue-600">Industrial</span> Tarp Printing.
-              </h1>
-              <p className="mb-8 text-lg text-slate-600 lg:text-xl">
-                Meet the Titan X-500. Engineered for high-volume production, extreme durability, and unmatched precision. Print larger, faster, and better.
-              </p>
-              <div className="flex flex-wrap gap-4">
-                <button className="flex items-center gap-2 rounded-full bg-slate-900 px-8 py-4 text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl">
-                  Get a Quote <ArrowRight className="h-5 w-5" />
-                </button>
-                <button className="flex items-center gap-2 rounded-full border border-slate-200 px-8 py-4 text-lg font-bold transition-all hover:bg-slate-50">
-                  <PlayCircle className="h-5 w-5" /> Watch Demo
-                </button>
-              </div>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="relative"
-            >
-              <div className="absolute -inset-4 rounded-[2rem] bg-blue-100/50 blur-3xl"></div>
-              <img 
-                src="https://picsum.photos/seed/printer/800/600" 
-                alt="Industrial Printer" 
-                className="relative rounded-3xl border border-slate-200 bg-white p-4 shadow-2xl"
-                referrerPolicy="no-referrer"
-              />
-              <div className="absolute -bottom-6 -left-6 rounded-2xl bg-white p-6 shadow-xl border border-slate-100">
-                <div className="flex items-center gap-4">
-                  <div className="rounded-full bg-emerald-100 p-2 text-emerald-600">
-                    <CheckCircle2 className="h-6 w-6" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-bold">99.9% Uptime</p>
-                    <p className="text-xs text-slate-500">Industrial reliability</p>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+      <section className="relative h-[600px] overflow-hidden bg-slate-900">
+        <img 
+          src="https://picsum.photos/seed/industrial/1920/1080" 
+          alt="Industrial Tarp" 
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900/40 to-transparent"></div>
+        <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-center px-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-2xl"
+          >
+            <Badge className="mb-6 bg-blue-600 px-4 py-1 text-sm">Industrial Grade Quality</Badge>
+            <h1 className="mb-6 text-5xl font-black leading-tight text-white lg:text-7xl">
+              Premium Tarps <br />
+              <span className="text-blue-500 text-shadow-sm">Built to Last.</span>
+            </h1>
+            <p className="mb-8 text-xl text-slate-300">
+              The nation's leading supplier of heavy-duty, industrial, and custom-sized tarps. Weather-proof protection for what matters most.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Button size="lg" className="h-14 rounded-full bg-blue-600 px-8 text-lg font-bold hover:bg-blue-700">
+                Shop All Products
+              </Button>
+              <Button size="lg" variant="outline" className="h-14 rounded-full border-white px-8 text-lg font-bold text-white hover:bg-white hover:text-slate-900">
+                Custom Quote
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section id="features" className="bg-slate-50 py-24">
+      {/* Trust Badges */}
+      <div className="border-b border-slate-100 bg-slate-50 py-10">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-8 px-6 md:grid-cols-4">
+          {[
+            { icon: CheckCircle2, title: "Quality Guaranteed", desc: "Industrial standards" },
+            { icon: ShoppingCart, title: "Fast Shipping", desc: "Across the nation" },
+            { icon: Star, title: "Top Rated", desc: "5,000+ Happy clients" },
+            { icon: MapPin, title: "USA Based", desc: "Support local business" },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4">
+              <div className="rounded-full bg-blue-100 p-2 text-blue-600">
+                <item.icon className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm font-bold">{item.title}</p>
+                <p className="text-xs text-slate-500">{item.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Categories Grid */}
+      <section className="py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight lg:text-4xl">Built for Performance</h2>
-            <p className="mx-auto max-w-2xl text-slate-600">
-              The Titan X-500 combines cutting-edge hardware with intelligent software to deliver the most efficient printing experience in the industry.
-            </p>
+          <div className="mb-12 flex items-end justify-between">
+            <div>
+              <h2 className="text-3xl font-black tracking-tight">Shop by Category</h2>
+              <p className="text-slate-500">Find the perfect material for your needs</p>
+            </div>
+            <Button variant="link" className="text-blue-600">View all categories <ChevronRight className="ml-1 h-4 w-4" /></Button>
           </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
-            {FEATURES.map((feature, index) => (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {CATEGORIES.map((cat, i) => (
               <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="rounded-2xl bg-white p-8 shadow-sm transition-all hover:shadow-md"
+                key={i}
+                whileHover={{ y: -8 }}
+                className="group relative h-80 overflow-hidden rounded-2xl"
               >
-                <div className="mb-6 inline-flex rounded-xl bg-blue-50 p-3 text-blue-600">
-                  <feature.icon className="h-6 w-6" />
+                <img src={cat.image} alt={cat.name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" referrerPolicy="no-referrer" />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent"></div>
+                <div className="absolute bottom-6 left-6 text-white">
+                  <p className="text-xs font-bold uppercase tracking-widest text-blue-400">{cat.count}</p>
+                  <h3 className="text-xl font-bold">{cat.name}</h3>
                 </div>
-                <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
-                <p className="text-sm leading-relaxed text-slate-600">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Specs Section */}
-      <section id="specs" className="py-24">
+      {/* Featured Products */}
+      <section className="bg-slate-50 py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="rounded-3xl bg-slate-900 p-8 text-white lg:p-16">
-            <div className="grid gap-12 lg:grid-cols-2">
-              <div>
-                <h2 className="mb-6 text-3xl font-bold lg:text-4xl">Technical Specifications</h2>
-                <p className="mb-12 text-slate-400">
-                  Detailed breakdown of the Titan X-500's capabilities. Designed to meet the highest standards of industrial production.
-                </p>
-                <div className="grid gap-6 sm:grid-cols-2">
-                  {SPECS.map((spec) => (
-                    <div key={spec.label} className="border-l-2 border-blue-600 pl-4">
-                      <p className="text-xs font-bold uppercase tracking-widest text-slate-500">{spec.label}</p>
-                      <p className="text-lg font-semibold">{spec.value}</p>
-                    </div>
-                  ))}
+          <div className="mb-12 text-center">
+            <h2 className="text-3xl font-black tracking-tight">Featured Products</h2>
+            <p className="text-slate-500">Our most popular industrial solutions</p>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {FEATURED_PRODUCTS.map((product, i) => (
+              <Card key={i} className="overflow-hidden border-none shadow-sm transition-shadow hover:shadow-md">
+                <div className="relative aspect-square overflow-hidden">
+                  <img src={product.image} alt={product.name} className="h-full w-full object-cover" referrerPolicy="no-referrer" />
+                  <Button size="icon" className="absolute bottom-4 right-4 h-10 w-10 rounded-full bg-white text-slate-900 shadow-lg hover:bg-blue-600 hover:text-white">
+                    <ShoppingCart className="h-5 w-5" />
+                  </Button>
                 </div>
-              </div>
-              <div className="flex items-center justify-center">
-                <div className="relative h-64 w-64 lg:h-96 lg:w-96">
-                  <div className="absolute inset-0 animate-pulse rounded-full bg-blue-600/20 blur-3xl"></div>
-                  <div className="relative flex h-full w-full items-center justify-center rounded-full border-2 border-slate-800">
-                    <Printer className="h-32 w-32 text-blue-500" />
+                <CardContent className="p-4">
+                  <div className="mb-2 flex gap-0.5">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className={`h-3 w-3 ${j < product.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`} />
+                    ))}
                   </div>
-                </div>
-              </div>
-            </div>
+                  <h3 className="mb-1 font-bold text-slate-900">{product.name}</h3>
+                  <p className="text-lg font-black text-blue-600">{product.price}</p>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="pb-24">
+      {/* Newsletter */}
+      <section className="py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="relative overflow-hidden rounded-3xl bg-blue-600 px-8 py-16 text-center text-white lg:px-16 lg:py-24">
-            <div className="relative z-10">
-              <h2 className="mb-6 text-4xl font-extrabold lg:text-5xl">Ready to upgrade your production?</h2>
-              <p className="mx-auto mb-10 max-w-2xl text-lg text-blue-100">
-                Join hundreds of industrial printing facilities that have already switched to the Titan X-500.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                <button className="rounded-full bg-white px-8 py-4 text-lg font-bold text-blue-600 shadow-xl transition-transform hover:scale-105">
-                  Contact Sales
-                </button>
-                <button className="rounded-full border border-blue-400 bg-blue-500/20 px-8 py-4 text-lg font-bold text-white backdrop-blur-sm transition-transform hover:scale-105">
-                  Download Brochure
-                </button>
+          <div className="relative overflow-hidden rounded-[2rem] bg-blue-600 px-8 py-16 text-center text-white lg:px-16 lg:py-24">
+            <div className="relative z-10 mx-auto max-w-2xl">
+              <h2 className="mb-4 text-4xl font-black">Get 10% Off Your First Order</h2>
+              <p className="mb-8 text-blue-100">Subscribe to our newsletter for exclusive deals, new product launches, and industrial tips.</p>
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Input 
+                  placeholder="Enter your email address" 
+                  className="h-14 rounded-full border-none bg-white/20 px-6 text-white placeholder:text-blue-100 focus-visible:ring-white"
+                />
+                <Button size="lg" className="h-14 rounded-full bg-white px-8 font-bold text-blue-600 hover:bg-blue-50">
+                  Subscribe Now
+                </Button>
               </div>
             </div>
-            {/* Background Accents */}
             <div className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-blue-500/50 blur-3xl"></div>
             <div className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-blue-700/50 blur-3xl"></div>
           </div>
@@ -219,17 +242,58 @@ export default function LandingPage({ onGoToDashboard }: { onGoToDashboard: () =
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-100 py-12">
+      <footer className="bg-slate-900 pt-20 pb-10 text-white">
         <div className="mx-auto max-w-7xl px-6">
-          <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
-            <div className="flex items-center gap-2">
-              <Printer className="h-6 w-6 text-blue-600" />
-              <span className="text-lg font-bold tracking-tighter">TARP-TECH</span>
+          <div className="mb-16 grid gap-12 lg:grid-cols-4">
+            <div className="col-span-1 lg:col-span-1">
+              <div className="mb-6 flex items-center gap-2">
+                <Printer className="h-8 w-8 text-blue-500" />
+                <span className="text-2xl font-black tracking-tighter">TARP FOR LESS</span>
+              </div>
+              <p className="mb-8 text-slate-400">
+                The nation's most trusted source for industrial tarps and covers. Quality materials, expert craftsmanship, and unbeatable prices.
+              </p>
+              <div className="flex gap-4">
+                <Button size="icon" variant="outline" className="rounded-full border-slate-700 hover:bg-blue-600 hover:border-blue-600"><Facebook className="h-4 w-4" /></Button>
+                <Button size="icon" variant="outline" className="rounded-full border-slate-700 hover:bg-blue-600 hover:border-blue-600"><Twitter className="h-4 w-4" /></Button>
+                <Button size="icon" variant="outline" className="rounded-full border-slate-700 hover:bg-blue-600 hover:border-blue-600"><Instagram className="h-4 w-4" /></Button>
+              </div>
             </div>
-            <p className="text-sm text-slate-500">© 2026 Tarp-Tech Industrial. All rights reserved.</p>
-            <div className="flex gap-6">
-              <a href="#" className="text-sm text-slate-500 hover:text-blue-600">Privacy Policy</a>
-              <a href="#" className="text-sm text-slate-500 hover:text-blue-600">Terms of Service</a>
+            <div>
+              <h4 className="mb-6 text-lg font-bold">Quick Links</h4>
+              <ul className="space-y-4 text-slate-400">
+                <li><a href="#" className="hover:text-white">Shop All</a></li>
+                <li><a href="#" className="hover:text-white">Custom Sizes</a></li>
+                <li><a href="#" className="hover:text-white">Bulk Orders</a></li>
+                <li><a href="#" className="hover:text-white">Shipping Info</a></li>
+                <li><a href="#" className="hover:text-white">Return Policy</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-6 text-lg font-bold">Categories</h4>
+              <ul className="space-y-4 text-slate-400">
+                <li><a href="#" className="hover:text-white">Heavy Duty Tarps</a></li>
+                <li><a href="#" className="hover:text-white">Mesh Tarps</a></li>
+                <li><a href="#" className="hover:text-white">Vinyl Tarps</a></li>
+                <li><a href="#" className="hover:text-white">Clear Tarps</a></li>
+                <li><a href="#" className="hover:text-white">Canvas Covers</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="mb-6 text-lg font-bold">Contact Us</h4>
+              <ul className="space-y-4 text-slate-400">
+                <li className="flex gap-3"><MapPin className="h-5 w-5 text-blue-500" /> 123 Industrial Way, <br />Chicago, IL 60601</li>
+                <li className="flex gap-3"><Phone className="h-5 w-5 text-blue-500" /> 1-800-TARP-LESS</li>
+                <li className="flex gap-3"><Mail className="h-5 w-5 text-blue-500" /> sales@tarpforless.com</li>
+              </ul>
+            </div>
+          </div>
+          <div className="flex flex-col items-center justify-between border-t border-slate-800 pt-10 text-sm text-slate-500 md:flex-row">
+            <p>© 2026 Tarp For Less. All rights reserved.</p>
+            <div className="mt-4 flex gap-8 md:mt-0">
+              <a href="#" className="hover:text-white">Privacy Policy</a>
+              <a href="#" className="hover:text-white">Terms of Service</a>
+              <a href="#" className="hover:text-white">Sitemap</a>
             </div>
           </div>
         </div>
