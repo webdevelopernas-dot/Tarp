@@ -27,12 +27,6 @@ const CATEGORIES = [
   { name: "Clear Tarps", count: "42+ Products", image: "https://picsum.photos/seed/clear/400/300" },
 ];
 
-const FEATURED_PRODUCTS = [
-  { name: "Super Heavy Duty Blue Tarp", price: "$45.99", rating: 5, image: "https://picsum.photos/seed/tarp1/400/400" },
-  { name: "Industrial Grade Mesh Tarp", price: "$32.50", rating: 4, image: "https://picsum.photos/seed/tarp2/400/400" },
-  { name: "Clear Vinyl Patio Tarp", price: "$58.00", rating: 5, image: "https://picsum.photos/seed/tarp3/400/400" },
-  { name: "Canvas Truck Cover", price: "$120.00", rating: 5, image: "https://picsum.photos/seed/tarp4/400/400" },
-];
 
 export default function LandingPage({ onGoToDashboard, cmsData }: { onGoToDashboard: () => void, cmsData: any }) {
   // Fallback data if cmsData is not yet loaded
@@ -49,6 +43,13 @@ export default function LandingPage({ onGoToDashboard, cmsData }: { onGoToDashbo
     { label: "Fast Shipping", desc: "Across the nation" },
     { label: "Top Rated", desc: "5,000+ Happy clients" },
     { label: "USA Based", desc: "Support local business" },
+  ];
+
+  const products = cmsData?.products || [
+    { id: "1", name: "Super Heavy Duty Blue Tarp", price: "45.99", rating: 5, image: "https://picsum.photos/seed/tarp1/400/400" },
+    { id: "2", name: "Industrial Grade Mesh Tarp", price: "32.50", rating: 4, image: "https://picsum.photos/seed/tarp2/400/400" },
+    { id: "3", name: "Clear Vinyl Patio Tarp", price: "58.00", rating: 5, image: "https://picsum.photos/seed/tarp3/400/400" },
+    { id: "4", name: "Canvas Truck Cover", price: "120.00", rating: 5, image: "https://picsum.photos/seed/tarp4/400/400" },
   ];
 
   return (
@@ -209,7 +210,7 @@ export default function LandingPage({ onGoToDashboard, cmsData }: { onGoToDashbo
             <p className="text-slate-500">Our most popular industrial solutions</p>
           </div>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {FEATURED_PRODUCTS.map((product, i) => (
+            {products.map((product: any, i: number) => (
               <Card key={i} className="overflow-hidden border-none shadow-sm transition-shadow hover:shadow-md">
                 <div className="relative aspect-square overflow-hidden">
                   <img src={product.image} alt={product.name} className="h-full w-full object-cover" referrerPolicy="no-referrer" />
@@ -220,11 +221,11 @@ export default function LandingPage({ onGoToDashboard, cmsData }: { onGoToDashbo
                 <CardContent className="p-4">
                   <div className="mb-2 flex gap-0.5">
                     {[...Array(5)].map((_, j) => (
-                      <Star key={j} className={`h-3 w-3 ${j < product.rating ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`} />
+                      <Star key={j} className={`h-3 w-3 ${j < (product.rating || 5) ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`} />
                     ))}
                   </div>
                   <h3 className="mb-1 font-bold text-slate-900">{product.name}</h3>
-                  <p className="text-lg font-black text-blue-600">{product.price}</p>
+                  <p className="text-lg font-black text-blue-600">${product.price}</p>
                 </CardContent>
               </Card>
             ))}

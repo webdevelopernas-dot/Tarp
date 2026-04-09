@@ -21,7 +21,9 @@ import {
   Lock,
   Save,
   LogOut,
-  Edit3
+  Edit3,
+  Plus,
+  Trash2
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import * as React from 'react';
@@ -473,6 +475,184 @@ export default function App() {
                     ))}
                   </CardContent>
                 </Card>
+              </div>
+            </div>
+          )}
+
+          {adminTab === 'products' && cmsData && (
+            <div className="max-w-6xl">
+              <div className="mb-8 flex items-center justify-between">
+                <div>
+                  <h1 className="text-2xl font-bold text-slate-900">Product Management</h1>
+                  <p className="text-slate-500">Add, edit, or remove products from your catalog.</p>
+                </div>
+                <Button 
+                  onClick={() => {
+                    const newProduct = {
+                      id: `prod-${Date.now()}`,
+                      name: "New Product",
+                      description: "",
+                      price: "0.00",
+                      stock: "0",
+                      image: "https://picsum.photos/seed/new/400/400"
+                    };
+                    const newCmsData = { ...cmsData, products: [...(cmsData.products || []), newProduct] };
+                    setCmsData(newCmsData);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  <Plus className="mr-2 h-4 w-4" />
+                  Add New Product
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+                {/* Product List Table */}
+                <div className="lg:col-span-2">
+                  <Card className="overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-left">
+                        <thead>
+                          <tr className="bg-slate-50 text-xs font-semibold uppercase tracking-wider text-slate-500">
+                            <th className="px-6 py-4">Product</th>
+                            <th className="px-6 py-4">Price</th>
+                            <th className="px-6 py-4">Stock</th>
+                            <th className="px-6 py-4 text-right">Actions</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {(cmsData.products || []).map((product: any, index: number) => (
+                            <tr key={product.id} className="group hover:bg-slate-50 transition-colors">
+                              <td className="px-6 py-4">
+                                <div className="flex items-center gap-3">
+                                  <img 
+                                    src={product.image} 
+                                    alt={product.name} 
+                                    className="h-10 w-10 rounded-lg object-cover"
+                                    referrerPolicy="no-referrer"
+                                  />
+                                  <div className="overflow-hidden">
+                                    <p className="truncate text-sm font-medium text-slate-900">{product.name}</p>
+                                    <p className="truncate text-xs text-slate-500">{product.id}</p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="px-6 py-4 text-sm font-semibold text-slate-900">${product.price}</td>
+                              <td className="px-6 py-4">
+                                <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+                                  parseInt(product.stock) < 5 ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'
+                                }`}>
+                                  {product.stock} in stock
+                                </span>
+                              </td>
+                              <td className="px-6 py-4 text-right">
+                                <div className="flex justify-end gap-2">
+                                  <Button 
+                                    variant="ghost" 
+                                    size="icon"
+                                    onClick={() => {
+                                      const newProducts = cmsData.products.filter((p: any) => p.id !== product.id);
+                                      setCmsData({ ...cmsData, products: newProducts });
+                                    }}
+                                    className="text-rose-500 hover:bg-rose-50 hover:text-rose-600"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </Card>
+                </div>
+
+                {/* Edit Form (Simple for now, editing the last added or selected) */}
+                <div className="space-y-6">
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Edit Product Details</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {cmsData.products && cmsData.products.length > 0 ? (
+                        <>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Product Name</label>
+                            <Input 
+                              value={cmsData.products[cmsData.products.length - 1].name} 
+                              onChange={e => {
+                                const newProducts = [...cmsData.products];
+                                newProducts[newProducts.length - 1].name = e.target.value;
+                                setCmsData({ ...cmsData, products: newProducts });
+                              }}
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Description</label>
+                            <textarea 
+                              className="w-full rounded-lg border border-slate-200 bg-transparent p-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                              rows={4}
+                              value={cmsData.products[cmsData.products.length - 1].description} 
+                              onChange={e => {
+                                const newProducts = [...cmsData.products];
+                                newProducts[newProducts.length - 1].description = e.target.value;
+                                setCmsData({ ...cmsData, products: newProducts });
+                              }}
+                            />
+                          </div>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                              <label className="text-sm font-medium">Price ($)</label>
+                              <Input 
+                                type="number"
+                                value={cmsData.products[cmsData.products.length - 1].price} 
+                                onChange={e => {
+                                  const newProducts = [...cmsData.products];
+                                  newProducts[newProducts.length - 1].price = e.target.value;
+                                  setCmsData({ ...cmsData, products: newProducts });
+                                }}
+                              />
+                            </div>
+                            <div className="space-y-2">
+                              <label className="text-sm font-medium">Stock</label>
+                              <Input 
+                                type="number"
+                                value={cmsData.products[cmsData.products.length - 1].stock} 
+                                onChange={e => {
+                                  const newProducts = [...cmsData.products];
+                                  newProducts[newProducts.length - 1].stock = e.target.value;
+                                  setCmsData({ ...cmsData, products: newProducts });
+                                }}
+                              />
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Image URL</label>
+                            <Input 
+                              value={cmsData.products[cmsData.products.length - 1].image} 
+                              onChange={e => {
+                                const newProducts = [...cmsData.products];
+                                newProducts[newProducts.length - 1].image = e.target.value;
+                                setCmsData({ ...cmsData, products: newProducts });
+                              }}
+                            />
+                          </div>
+                          <Button 
+                            onClick={saveCmsData} 
+                            className="w-full bg-blue-600 hover:bg-blue-700"
+                            disabled={isSaving}
+                          >
+                            <Save className="mr-2 h-4 w-4" />
+                            {isSaving ? 'Saving...' : 'Save Product Changes'}
+                          </Button>
+                        </>
+                      ) : (
+                        <p className="text-center text-sm text-slate-500 py-8">No products to edit. Add one to get started.</p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
             </div>
           )}

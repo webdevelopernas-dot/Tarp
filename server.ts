@@ -25,6 +25,23 @@ const initialCmsData = {
     { label: "Total Sales", value: "$128,430" },
     { label: "Active Orders", value: "432" },
     { label: "Low Stock Tarps", value: "12" }
+  ],
+  products: [
+    {
+      id: "prod-1",
+      name: "DS-740SJ (1.9m Dual Head Eco-Solvent Printer)",
+      description: "Large Format Digital Inkjet Printer for Indoor & Outdoor Advertising. Features 2 Heads (XP600/DX5/DX7/I3200), 2880 DPI resolution, and 45 m²/hour speed. Ideal for tarpaulin, vinyl, and banners.",
+      price: "4500.00",
+      stock: "5",
+      image: "https://picsum.photos/seed/printer/800/600",
+      specs: {
+        model: "DS-740SJ",
+        width: "1.9m",
+        heads: "2 Heads",
+        resolution: "2880 DPI",
+        speed: "45 m²/hour"
+      }
+    }
   ]
 };
 
